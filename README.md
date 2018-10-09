@@ -1,11 +1,21 @@
 
 #### Make sure you can run "sudo" without a password
+
+You can either edit `/etc/sudoers` like this:
 ```
 sudo visudo
 ```
-Then add the line:
+Then add this line to the END OF THE FILE (if you don't add it to the end it doesn't work, not sure why):
 ```
 <user> ALL=(ALL) NOPASSWD: ALL
+```
+
+The second option is you can just add a file in `/etc/sudoers.d` with this config.  You can do this with an echo command:
+```
+# you need to change the shell to root user, because the redirect needs root permissions
+# which means you can just add "sudo" to the echo command
+sudo su
+echo "<user> ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/<some-name>
 ```
 
 #### Install Visual Studio Code
@@ -42,6 +52,29 @@ PATH="~/bin:$PATH"
 ```
 
 #### Install DMD compiler
+
+
+##### Use `install.sh` script
+```
+mkdir ~/dlang
+curl -fsS https://dlang.org/install.sh > ~/dlang/install.sh
+chmod a+x ~/dlang/install.sh
+
+# Install latest
+~/dlang/install.sh
+# Install specific version
+~/dlang/install.sh install dmd-2.079.0
+```
+
+Now create links to binaries:
+```
+ln -s ~/dlang/dmd<version>/linux/bin64/dmd ~/bin/dmd
+ln -s ~/dlang/dmd<version>/linux/bin64/rdmd ~/bin/rdmd
+```
+
+
+#### Manual installation
+
 Goto http://dlang.org/download and download the tar.xz file.
 
 > I like to install manually so I can maintain multiple versions of the compiler.
