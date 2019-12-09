@@ -51,6 +51,20 @@ The permanently add this directory to the PATH.  Open "~/.profile" and add the f
 PATH="~/bin:$PATH"
 ```
 
+#### Create the set-title function in `.bashrc`
+
+```bash
+function set-title() {
+  if [[ -z "$ORIG" ]]; then
+    ORIG=$PS1
+  fi
+  TITLE="\[\e]2;$*\a\]"
+  PS1=${ORIG}${TITLE}
+}
+```
+
+This allows you to run `set-title my new title" in your terminal to set the window title.
+
 #### Install DMD compiler
 
 
