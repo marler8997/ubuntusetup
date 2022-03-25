@@ -123,3 +123,30 @@ git clone https://github.com/marler8997/utils
 cd utils
 bb
 ```
+
+### Enable Remote X11 Connections
+
+* enable tcp listen sockets on xserver
+    - note that xserver is managed by gdm (Gnome Desktop Manager)
+    - Modify /etc/gdm3/custom.conf
+
+```
+[security]
+DisallowTCP=false
+
+[xdmcp]
+ServerArguments=-listen tcp
+```
+
+Then run `sudo systemctl restart gdm` to reload the config.
+
+* disable remote access control with
+
+```
+# enable all hosts with
+xhost +
+# enable specific hosts with
+xhost +HOST
+```
+
+Put these lines into `/etc/profile` to make them persistent.
